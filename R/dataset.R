@@ -4,6 +4,7 @@ library(tibble)
 size <- 100
 
 # Synthetic dataset
+set.seed(20)
 df <- tibble(
   x = c(
     rnorm(n = size, mean = 3, sd = 1),
@@ -14,7 +15,7 @@ df <- tibble(
     rnorm(n = size, mean = 5, sd = 1)
   ),
   class = c(
-    rep("a", size),
-    rep("b", size)
+    rep("Class a", size),
+    rep("Class b", size)
   )
 )
