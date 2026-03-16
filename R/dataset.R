@@ -15,7 +15,7 @@ df <- tibble(
     rnorm(n = size, mean = 5, sd = 1)
   ),
   class = c(
-    rep("Class a", size),
-    rep("Class b", size)
+    rep("a", size),
+    rep("b", size)
   )
 )

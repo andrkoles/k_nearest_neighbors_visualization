@@ -36,7 +36,7 @@ ui <- page_fillable(
         plotlyOutput("plot"),
       ),
       card(
-        card_header(class = "bg-dark", "Class and nearest neighbors table"),
+        card_header(class = "bg-dark", "Class count, outcome and NN table"),
         card_body(
           min_height = 250,
           tableOutput("class_count"),
@@ -72,7 +72,7 @@ server <- function(input, output, session) {
   })
   
   output$outcome <- renderText({
-    paste0("The observation belongs to ", class(), ".")
+    paste0("The new observation belongs to class ", class(), ".")
   })
   
   # Plot the training dataset. In addition plot distances, as line segments, 
@@ -80,8 +80,15 @@ server <- function(input, output, session) {
   # plotting functions are static. Passing static data, was my solution to 
   # preserve the zoom level when restyling some of the traces.
   output$plot <- renderPlotly({
-    plot_ly(df) |>
-      add_markers(x = ~x, y = ~y, symbol = ~class, symbols = c('x', 'o')) |>
+    plot_ly(data = df) |>
+      add_markers(
+        x = ~x, 
+        y = ~y, 
+        symbol = ~paste0("Class ", class), 
+        symbols = c('x', '15'),
+        color = ~paste0("Class ", class),
+        colors = "Set1"
+      ) |>
       add_markers(
         x = 4, 
         y = 4,
