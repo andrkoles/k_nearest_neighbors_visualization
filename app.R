@@ -2,7 +2,6 @@ library(shiny)
 library(bslib)
 library(dplyr)
 library(plotly)
-library(ggplot2)
 
 source("R/euclidean_distance.R")
 source("R/find_class.R")
@@ -25,9 +24,10 @@ ui <- page_fillable(
       title = "Inputs",
       numericInput("k", "Number of neighbors", min = 1, max = 200, step = 2,
                    value = init_k),
-      numericInput("x", "Feature x of observation", min = -100, max = 100,
+      h5("New observation"),
+      numericInput("x", "Feature x", min = -100, max = 100,
                    step = 0.1, value = 4),
-      numericInput("y", "Feature y of observation", min = -100, max = 100,
+      numericInput("y", "Feature y", min = -100, max = 100,
                    step = 0.1, value = 4)
     ),
     layout_columns(
@@ -60,6 +60,10 @@ server <- function(input, output, session) {
   # Arranges in ascending order of distances and keeps the first
   # input$k rows: Finds input$k NN
   data_nn <- reactive({
+    
+    req(is.integer(input$k) & input$k > 0)
+    req(input$x & input$y)
+    
     d <- df |> 
       mutate(distances = euclidean_distance(df, observation())) |> 
       slice_min(order_by = distances, n = input$k)
