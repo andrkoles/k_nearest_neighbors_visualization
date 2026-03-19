@@ -32,7 +32,7 @@ ui <- page_fillable(
     ),
     layout_columns(
       card(
-        card_header(class = "bg-dark", "Nearest Neigbors Plot"),
+        card_header(class = "bg-dark", "Nearest Neighbors Plot"),
         plotlyOutput("plot"),
       ),
       card(
